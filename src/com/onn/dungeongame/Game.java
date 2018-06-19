@@ -1,8 +1,4 @@
 /*
- * Copyright (c) OllieAndNano 2018.
- */
-
-/*
  * This is the game core
  */
 

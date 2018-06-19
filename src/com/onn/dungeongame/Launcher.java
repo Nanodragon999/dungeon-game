@@ -1,7 +1,3 @@
-/*
- * Copyright (c) OllieAndNano 2018.
- */
-
 package com.onn.dungeongame;
 
 public class Launcher {
