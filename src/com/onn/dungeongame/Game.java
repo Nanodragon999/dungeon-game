@@ -4,6 +4,11 @@
 
 package com.onn.dungeongame;
 
+import com.onn.dungeongame.gfx.Assets;
+import com.onn.dungeongame.world.World;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+
 public class Game implements Runnable {
 	
 	private String title;
@@ -13,6 +18,8 @@ public class Game implements Runnable {
 	private boolean running = false; // Defines if game is running or not
 	
 	private Display display; // The game's display
+	
+	private World world;
 	
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -34,7 +41,10 @@ public class Game implements Runnable {
 	
 	public void init() {
 		// Initialize stuff
+		Assets.init();
 		display = new Display(title, width, height);
+		world = new World();
+		world.loadWorld("res/worlds/level_1");
 	}
 	
 	public synchronized void stop() {
@@ -90,10 +100,21 @@ public class Game implements Runnable {
 	}
 	
 	private void tick() {
-	
+		world.tick();
 	}
 	
 	private void render() {
-	
+		BufferStrategy bs = display.getCanvas().getBufferStrategy();
+		if(bs == null) {
+			display.getCanvas().createBufferStrategy(3);
+			return;
+		}
+		
+		Graphics g = bs.getDrawGraphics();
+		
+		world.render(g);
+		
+		bs.show();
+		g.dispose();
 	}
 }
